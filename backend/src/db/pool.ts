@@ -8,6 +8,9 @@ let pool: pg.Pool | null = null
 export function getPool(): pg.Pool | null {
   if (!env.databaseUrl) return null
   if (!pool) {
+    if (env.nodeEnv === 'production') {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+    }
     const useSsl = env.databaseUrl.includes('sslmode=') || env.databaseUrl.includes('supabase.com')
     pool = new Pool({
       connectionString: env.databaseUrl,
