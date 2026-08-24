@@ -271,4 +271,5 @@ being worked on changes.
 - Added production database migrate and seed scripts inside `backend/package.json` that execute compiled JS output.
 - Created `backend/.env.example` defining database URLs and CORS locks.
 - Created `frontend/.env.example` defining API variables.
+- Moved `typescript` and typescript type definitions for Node, Express, pg, and CORS into production `"dependencies"` inside `backend/package.json`. This forces Render/Railway build containers to install them and compile correctly under `NODE_ENV=production`.
 - Verified that all compilation builds pass and are ready for hosting pipelines.
