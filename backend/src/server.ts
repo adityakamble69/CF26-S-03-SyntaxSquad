@@ -10,7 +10,8 @@ import { apiRouter } from './routes/index.js'
 
 const app = express()
 
-app.use(cors({ origin: env.corsOrigin }))
+const allowedOrigin = env.corsOrigin.endsWith('/') ? env.corsOrigin.slice(0, -1) : env.corsOrigin
+app.use(cors({ origin: allowedOrigin }))
 app.use(express.json({ limit: '1mb' }))
 
 app.use('/api', apiRouter)
