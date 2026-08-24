@@ -274,4 +274,5 @@ being worked on changes.
 - Moved `typescript` and typescript type definitions for Node, Express, pg, and CORS into production `"dependencies"` inside `backend/package.json`. This forces Render/Railway build containers to install them and compile correctly under `NODE_ENV=production`.
 - Force Node.js DNS resolution order to `ipv4first` in database migrate (`migrate.ts`), seed (`seed.ts`), and web API (`server.ts`) entrypoints to bypass Render's IPv6 networking (`ENETUNREACH`) blocks on outgoing requests.
 - Configure `ssl: { rejectUnauthorized: false }` in `backend/src/db/pool.ts` database connection pool configuration when SSL is required. This prevents node-postgres from rejecting self-signed or internal CA certificate chains returned by cloud database managers like Supabase.
+- Bind backend server host from `127.0.0.1` to `0.0.0.0` in [`backend/src/server.ts`](file:///c:/Users/dexte/Downloads/S03_Urban_Infrastructure_Cascade_Simulator_MD_Files/backend/src/server.ts) to allow incoming traffic routing and port binding on cloud services (Render, Railway).
 - Verified that all compilation builds pass and are ready for hosting pipelines.

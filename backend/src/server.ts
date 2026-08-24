@@ -20,8 +20,8 @@ app.use(errorHandler)
 
 async function start() {
   const databaseConnected = await checkDatabaseConnection()
-  const server = app.listen(env.port, '127.0.0.1', () => {
-    console.log(`Cascade simulator API listening on http://127.0.0.1:${env.port}`)
+  const server = app.listen(env.port, '0.0.0.0', () => {
+    console.log(`Cascade simulator API listening on http://0.0.0.0:${env.port}`)
     console.log(
       databaseConnected
         ? 'PostgreSQL connected — Phase 8 migrations can enable persistent storage.'
