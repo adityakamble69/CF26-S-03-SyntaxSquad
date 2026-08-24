@@ -1,3 +1,6 @@
+import dns from 'node:dns'
+dns.setDefaultResultOrder('ipv4first')
+
 import { getPool } from './pool.js'
 
 const services = [

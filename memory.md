@@ -272,4 +272,5 @@ being worked on changes.
 - Created `backend/.env.example` defining database URLs and CORS locks.
 - Created `frontend/.env.example` defining API variables.
 - Moved `typescript` and typescript type definitions for Node, Express, pg, and CORS into production `"dependencies"` inside `backend/package.json`. This forces Render/Railway build containers to install them and compile correctly under `NODE_ENV=production`.
+- Force Node.js DNS resolution order to `ipv4first` in database migrate (`migrate.ts`), seed (`seed.ts`), and web API (`server.ts`) entrypoints to bypass Render's IPv6 networking (`ENETUNREACH`) blocks on outgoing requests.
 - Verified that all compilation builds pass and are ready for hosting pipelines.

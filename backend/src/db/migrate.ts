@@ -1,3 +1,6 @@
+import dns from 'node:dns'
+dns.setDefaultResultOrder('ipv4first')
+
 import { readdir, readFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'

@@ -1,3 +1,6 @@
+import dns from 'node:dns'
+dns.setDefaultResultOrder('ipv4first')
+
 import cors from 'cors'
 import express from 'express'
 import { env } from './config/env.js'
