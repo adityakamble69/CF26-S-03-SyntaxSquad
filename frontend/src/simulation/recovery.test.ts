@@ -99,4 +99,24 @@ describe('Simulation Recovery Logic', () => {
     expect(changed).toBe(true)
     expect(runtimeStates['svc-water'].state).toBe('HEALTHY')
   })
+
+  it('should return true when recovery is in progress to prevent premature simulation termination', () => {
+    const runtimeStates: Record<string, ServiceRuntime> = {
+      'svc-power': {
+        id: 'svc-power',
+        state: 'RECOVERING',
+        stress: 0.75,
+        disrupted: true,
+        firstAffectedTime: 0,
+        recoveryTicksRemaining: 3,
+      },
+    }
+    const events: SimulationEvent[] = []
+
+    const changed = processRecoveryProgress(runtimeStates, 2, events)
+
+    expect(changed).toBe(true)
+    expect(runtimeStates['svc-power'].recoveryTicksRemaining).toBe(2)
+    expect(runtimeStates['svc-power'].state).toBe('RECOVERING')
+  })
 })

@@ -71,6 +71,7 @@ export function processRecoveryProgress(
     if (runtime.state !== 'RECOVERING' || runtime.recoveryTicksRemaining === null) continue
 
     runtime.recoveryTicksRemaining -= 1
+    changed = true
 
     if (runtime.recoveryTicksRemaining <= 0) {
       runtime.state = 'RECOVERED'
@@ -86,7 +87,6 @@ export function processRecoveryProgress(
         newState: 'RECOVERED',
         reason: 'Service recovery finished',
       })
-      changed = true
     }
   }
 
