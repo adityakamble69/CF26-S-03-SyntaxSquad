@@ -2,9 +2,9 @@
 
 ## Project Status
 
-**Status:** Phase 12 complete\
-**Current Phase:** Complete\
-**Next Phase:** None
+**Status:** Phase 14.1 complete; Phase 14 enhancements planned\
+**Current Phase:** Phase 14 --- Post-MVP Enhancements\
+**Next Phase:** Pick another Phase 14 sub-feature to implement
 
 ## Project Identity
 
@@ -139,6 +139,16 @@ Use `@xyflow/react` for the MVP infrastructure graph (zoom, pan, nodes, directed
 
 ## Change Log
 
+### 2026-08-25 (Phase 14 planning)
+
+- Defined Phase 14 (Post-MVP Enhancements) in `phases.md`: export/share
+  reports, scenario comparison, live/auto-play mode, auth + per-user
+  scenarios, alerts panel, custom graph builder, onboarding/theme
+  polish, mobile audit, AI impact summary, PWA/download app.
+- Synced `PRD.md` Future Features section with the Phase 14 list.
+- Added "DOWNLOAD APP" nav button (desktop + mobile) with placeholder
+  URL, pending real app link.
+
 ### 2026-08-24 (Phase 6)
 
 - Built metric cards row (affected services, cascade depth, recovery time, system impact).
@@ -200,7 +210,23 @@ being worked on changes.
 
 ## Current Work
 
-**Current task:** Project Completed.
+**Current task:** Phase 14.1 (Export & Share Reports) complete. Select next Phase 14 enhancement to implement.
+
+**Phase 14 planned items:**
+- Export/share reports (PDF/PNG/CSV) [Completed]
+- Scenario comparison view
+- Live/auto-play simulation mode
+- Authentication + per-user scenarios
+- Alerts & notifications panel
+- Custom graph builder
+- Onboarding + theme polish
+- Mobile simulator audit
+- AI-generated impact summary
+- PWA / installable "Download App"
+
+- Added a "DOWNLOAD APP" button to `CinematicNav.tsx` (desktop + mobile
+  nav), currently pointing to a placeholder `APP_DOWNLOAD_URL = '#'`
+  until the real app/store link is available.
 
 **Completed:**
 - Phases 0–5: Full failure + recovery simulation
@@ -278,3 +304,11 @@ being worked on changes.
 - Sanitize `CORS_ORIGIN` variables to strip trailing slashes in [`backend/src/server.ts`](file:///c:/Users/dexte/Downloads/S03_Urban_Infrastructure_Cascade_Simulator_MD_Files/backend/src/server.ts), resolving CORS preflight check rejects.
 - Fix recovery simulation premature termination bug in [`frontend/src/simulation/recovery.ts`](file:///c:/Users/dexte/Downloads/S03_Urban_Infrastructure_Cascade_Simulator_MD_Files/frontend/src/simulation/recovery.ts) by setting `changed = true` on any active tick progress. This ensures the engine doesn't falsely assume stability and break the loop before the service finishes recovering.
 - Verified that all compilation builds pass and are ready for hosting pipelines.
+
+### 2026-08-25 (Phase 14.1 complete)
+
+- Added Export CSV button generating RFC-4180 compliant CSV sheets mapping events and friendly service names.
+- Added Print / Save PDF button triggering browser print settings.
+- Appended a dedicated printable layout component `IncidentReport.tsx` hidden on standard screens and styled with high contrast print styles.
+- Added comprehensive unit tests inside `exportHelpers.test.ts` checking CSV line formatting and character escaping. All 21 tests pass successfully.
+

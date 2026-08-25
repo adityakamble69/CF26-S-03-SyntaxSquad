@@ -287,3 +287,68 @@ Replay same scenario
 ### Final Deliverable
 
 A stable, visually impressive and explainable S-03 prototype.
+
+------------------------------------------------------------------------
+
+## Phase 14 --- Post-MVP Enhancements
+
+### 14.1 Export & Share Reports
+
+-   Export simulation results as PDF/PNG/CSV.
+-   Generate a shareable incident report (services affected, cascade
+    depth, recovery time, timeline snapshot).
+
+### 14.2 Scenario Comparison View
+
+-   Run two scenarios side-by-side.
+-   Compare cascade depth, affected services, and recovery time
+    between runs.
+
+### 14.3 Live / Auto-Play Mode
+
+-   Auto-advance the simulation timeline instead of manual scrubbing.
+-   Add playback speed control (0.5x / 1x / 2x).
+
+### 14.4 Authentication & Per-User Scenarios
+
+-   User login/signup.
+-   Persist saved scenarios per authenticated user.
+-   Restrict edit/delete to the owning user.
+
+### 14.5 Alerts & Notifications Panel
+
+-   Simulated alert feed (SMS/email-style) triggered when a critical
+    service fails or cascades.
+-   Alert severity levels tied to service criticality.
+
+### 14.6 Custom Graph Builder
+
+-   UI to add/edit/remove services and dependency edges.
+-   Save custom graphs as new scenarios instead of only seed data.
+
+### 14.7 Onboarding & Theme Polish
+
+-   First-time user walkthrough highlighting graph, controls, and
+    timeline.
+-   Refine dark/light theme consistency across all panels.
+
+### 14.8 Mobile Simulator Audit
+
+-   Verify graph interaction (pan/zoom/select) works on small
+    touch screens.
+-   Adjust simulator layout for narrow viewports.
+
+### 14.9 AI Impact Summary
+
+-   After a simulation run, generate a plain-English summary of what
+    happened (services affected, root cause, recovery outcome).
+
+### 14.10 PWA / Downloadable App
+
+-   Add `manifest.json` and service worker for installability.
+-   Wire the "Download App" nav button to the real app/store URL.
+
+### Deliverable
+
+A feature-complete, installable, shareable version of the simulator
+beyond the hackathon MVP.

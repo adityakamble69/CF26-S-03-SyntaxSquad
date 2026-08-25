@@ -33,3 +33,26 @@
     @apply m-0 bg-surface dark:bg-[#0B131C] font-sans text-navy dark:text-white antialiased transition-colors duration-200;
   }
 }
+
+@media print {
+  body {
+    background-color: white !important;
+    color: #0b131c !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  @page {
+    size: auto;
+    margin: 1.6cm;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}

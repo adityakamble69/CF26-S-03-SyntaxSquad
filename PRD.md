@@ -247,15 +247,19 @@ Final system state.
 
 ## 12. Future Features
 
--   Scenario comparison.
--   Risk scoring.
--   Dependency editing.
--   Custom city builder.
--   Import/export scenarios.
--   More advanced dependency rules.
--   Historical simulation analytics.
--   User accounts and collaboration.
--   Optional AI-assisted scenario generation.
+Tracked in detail under **Phase 14 --- Post-MVP Enhancements**
+(see `phases.md`).
+
+-   Export/share simulation reports (PDF/PNG/CSV).
+-   Scenario comparison (side-by-side runs).
+-   Live/auto-play simulation mode with speed control.
+-   User authentication and per-user saved scenarios.
+-   Alerts & notifications panel for critical failures.
+-   Custom graph builder (add/edit services and dependencies).
+-   Onboarding walkthrough and theme polish.
+-   Mobile simulator interaction audit.
+-   AI-generated plain-English impact summary.
+-   PWA packaging / installable "Download App" experience.
 
 ## 13. Source-of-Truth Rule
 

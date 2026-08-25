@@ -5,10 +5,12 @@ import { SimulationProgress } from '@/components/metrics/SimulationProgress'
 import { SimulationControls } from '@/components/simulation/SimulationControls'
 import { SimulationTimeline } from '@/components/simulation/SimulationTimeline'
 import { ScenarioManager } from '@/components/simulation/ScenarioManager'
+import { IncidentReport } from '@/components/simulation/IncidentReport'
 import { SEED_INFRASTRUCTURE } from '@/data/seedInfrastructure'
 import { usePrefersReducedMotion } from '@/hooks/useVideoScrub'
 import { useSimulation } from '@/hooks/useSimulation'
 import { api } from '@/services/api'
+import { downloadSimulationCSV, triggerReportPDF } from '@/utils/exportHelpers'
 import type { GraphData } from '@/types/graph'
 import { useEffect, useState } from 'react'
 
@@ -72,12 +74,13 @@ export function SimulatorWorkspace() {
   const healthyCount = services.filter((service) => service.state === 'HEALTHY').length
 
   return (
-    <section
-      id="simulator"
-      className="min-h-screen border-t border-navy/10 dark:border-white/10 bg-surface dark:bg-[#0B131C] px-6 py-24 transition-colors"
-      aria-label="Simulator"
-    >
-      <div className="mx-auto max-w-7xl">
+    <>
+      <section
+        id="simulator"
+        className="min-h-screen border-t border-navy/10 dark:border-white/10 bg-surface dark:bg-[#0B131C] px-6 py-24 transition-colors no-print"
+        aria-label="Simulator"
+      >
+        <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <div className="flex flex-wrap items-center gap-3">
@@ -108,10 +111,30 @@ export function SimulatorWorkspace() {
               through propagation, recovery, and stabilization.
             </p>
           </div>
-          <p className="text-sm text-neutral dark:text-slate-300">
-            {healthyCount} healthy · {failedCount} failed · {recoveringCount} recovering · T+
-            {simulationTime}s
-          </p>
+          <div className="flex flex-col items-start gap-2 sm:items-end text-left sm:text-right">
+            <p className="text-sm text-neutral dark:text-slate-300">
+              {healthyCount} healthy · {failedCount} failed · {recoveringCount} recovering · T+
+              {simulationTime}s
+            </p>
+            {events.length > 0 && (
+              <div className="mt-1 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => downloadSimulationCSV(events, services)}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded border border-navy/15 dark:border-white/20 bg-white dark:bg-[#132230] text-navy dark:text-white hover:bg-neutral-50 dark:hover:bg-navy/40 transition-colors"
+                >
+                  Export CSV
+                </button>
+                <button
+                  type="button"
+                  onClick={triggerReportPDF}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded border border-navy/15 dark:border-white/20 bg-white dark:bg-[#132230] text-navy dark:text-white hover:bg-neutral-50 dark:hover:bg-navy/40 transition-colors"
+                >
+                  Print / Save PDF
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_2fr_1fr]">
@@ -206,5 +229,14 @@ export function SimulatorWorkspace() {
         </div>
       </div>
     </section>
+    <div className="print-only">
+      <IncidentReport
+        services={services}
+        events={events}
+        metrics={metrics}
+        disruptions={disruptions}
+      />
+    </div>
+    </>
   )
 }
