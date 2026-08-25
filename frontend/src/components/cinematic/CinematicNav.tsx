@@ -1,7 +1,10 @@
-import { ArrowRight, Menu, Moon, Sun, X } from 'lucide-react'
+import { ArrowRight, Download, Menu, Moon, Sun, X } from 'lucide-react'
 import { useState } from 'react'
 
 const NAV_ITEMS = ['CASCADE', 'NETWORK', 'SCENARIOS', 'ANALYTICS'] as const
+
+// TODO: replace with the actual app store / app download URL
+const APP_DOWNLOAD_URL = '#'
 
 interface CinematicNavProps {
   onEnterSimulator: () => void
@@ -57,6 +60,16 @@ export function CinematicNav({
             </button>
           )}
 
+          <a
+            href={APP_DOWNLOAD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`hidden items-center gap-2 rounded-full border px-5 py-2 text-xs font-medium tracking-wide transition-opacity hover:opacity-90 sm:inline-flex ${borderClass} ${textClass}`}
+          >
+            DOWNLOAD APP
+            <Download className="h-4 w-4" aria-hidden="true" />
+          </a>
+
           <button
             type="button"
             onClick={onEnterSimulator}
@@ -101,6 +114,18 @@ export function CinematicNav({
                 </button>
               </li>
             ))}
+            <li>
+              <a
+                href={APP_DOWNLOAD_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-medium text-white"
+                onClick={() => setMenuOpen(false)}
+              >
+                DOWNLOAD APP
+                <Download className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </li>
             <li>
               <button
                 type="button"
