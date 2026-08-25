@@ -67,6 +67,10 @@ export function SimulatorWorkspace() {
     runSimulation,
     runRecovery,
     resetSimulation,
+    baselineMetrics,
+    baselineName,
+    pinBaseline,
+    clearBaseline,
   } = useSimulation(graphData)
 
   const failedCount = services.filter((service) => service.state === 'FAILED').length
@@ -139,7 +143,7 @@ export function SimulatorWorkspace() {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_2fr_1fr]">
           <div className="order-2 lg:order-none lg:col-span-3 lg:row-start-1">
-            <MetricCards metrics={metrics} phase={phase} />
+            <MetricCards metrics={metrics} phase={phase} baseline={baselineMetrics} />
           </div>
 
           <aside className="space-y-4 order-3 lg:order-none lg:col-start-1 lg:row-start-2">
@@ -160,6 +164,9 @@ export function SimulatorWorkspace() {
               onRun={() => runSimulation(reducedMotion)}
               onRecover={() => runRecovery(reducedMotion)}
               onReset={resetSimulation}
+              baselineName={baselineName}
+              onPinBaseline={pinBaseline}
+              onClearBaseline={clearBaseline}
             />
 
             <ScenarioManager

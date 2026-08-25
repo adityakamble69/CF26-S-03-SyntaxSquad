@@ -2,7 +2,7 @@
 
 ## Project Status
 
-**Status:** Phase 14.1 complete; Phase 14 enhancements planned\
+**Status:** Phase 14.2 complete; Phase 14 enhancements planned\
 **Current Phase:** Phase 14 --- Post-MVP Enhancements\
 **Next Phase:** Pick another Phase 14 sub-feature to implement
 
@@ -210,11 +210,11 @@ being worked on changes.
 
 ## Current Work
 
-**Current task:** Phase 14.1 (Export & Share Reports) complete. Select next Phase 14 enhancement to implement.
+**Current task:** Phase 14.2 (Scenario Comparison View) complete. Select next Phase 14 enhancement to implement.
 
 **Phase 14 planned items:**
 - Export/share reports (PDF/PNG/CSV) [Completed]
-- Scenario comparison view
+- Scenario comparison view [Completed]
 - Live/auto-play simulation mode
 - Authentication + per-user scenarios
 - Alerts & notifications panel
@@ -311,4 +311,13 @@ being worked on changes.
 - Added Print / Save PDF button triggering browser print settings.
 - Appended a dedicated printable layout component `IncidentReport.tsx` hidden on standard screens and styled with high contrast print styles.
 - Added comprehensive unit tests inside `exportHelpers.test.ts` checking CSV line formatting and character escaping. All 21 tests pass successfully.
+
+### 2026-08-25 (Phase 14.2 complete)
+
+- Added comparison pinning state (`baselineMetrics` and `baselineName`) and handlers (`pinBaseline`, `clearBaseline`) in the `useSimulation` hook.
+- Extended the `MetricCard` component to render comparison parameters (baseline value and calculated delta badge).
+- Configured red/green colored delta badges in `MetricCards.tsx` to automatically calculate changes for affected services, cascade depth, recovery time, and system impact.
+- Added "Pin current run as baseline" button and clear callbacks in `SimulationControls.tsx`.
+- Wrote component test suites in `MetricCards.test.tsx` to verify standard rendering and comparison layouts. All 23 unit tests pass.
+
 

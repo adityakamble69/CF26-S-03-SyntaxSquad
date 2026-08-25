@@ -32,6 +32,9 @@ describe('SimulationControls Component', () => {
     onRun: vi.fn(),
     onRecover: vi.fn(),
     onReset: vi.fn(),
+    baselineName: null,
+    onPinBaseline: vi.fn(),
+    onClearBaseline: vi.fn(),
   }
 
   it('renders simulation control buttons', () => {

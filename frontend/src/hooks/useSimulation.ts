@@ -53,6 +53,8 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
   const [totalDuration, setTotalDuration] = useState(0)
   const [activeEdgeIds, setActiveEdgeIds] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [baselineMetrics, setBaselineMetrics] = useState<SimulationMetrics | null>(null)
+  const [baselineName, setBaselineName] = useState<string | null>(null)
 
   const playbackRef = useRef<number | null>(null)
   const runtimeStatesRef = useRef<Record<string, ServiceRuntime> | null>(null)
@@ -399,6 +401,20 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
     [dependencies, initialServices.length, playSnapshots, recoveryDurations, recoveryTargets, stopPlayback],
   )
 
+  const pinBaseline = useCallback(() => {
+    if (!metrics) return
+    setBaselineMetrics(metrics)
+    const names = disruptions
+      .map((d) => services.find((s) => s.id === d.serviceId)?.name ?? d.serviceId)
+      .join(', ')
+    setBaselineName(names || 'Custom Scenario')
+  }, [metrics, disruptions, services])
+
+  const clearBaseline = useCallback(() => {
+    setBaselineMetrics(null)
+    setBaselineName(null)
+  }, [])
+
   return {
     services,
     dependencies,
@@ -426,6 +442,10 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
     runSimulation: runSimulationPlayback,
     runRecovery: runRecoveryPlayback,
     resetSimulation,
+    baselineMetrics,
+    baselineName,
+    pinBaseline,
+    clearBaseline,
   }
 }
 
