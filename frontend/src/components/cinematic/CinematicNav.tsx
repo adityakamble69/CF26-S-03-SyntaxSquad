@@ -4,7 +4,7 @@ import { useState } from 'react'
 const NAV_ITEMS = ['CASCADE', 'NETWORK', 'SCENARIOS', 'ANALYTICS'] as const
 
 // TODO: replace with the actual app store / app download URL
-const APP_DOWNLOAD_URL = '#'
+const APP_DOWNLOAD_URL = 'https://github.com/adityakamble69/CF26-S-03-SyntaxSquad/releases/download/v1.0.0/UrbenInfo.2.apk'
 
 interface CinematicNavProps {
   onEnterSimulator: () => void
