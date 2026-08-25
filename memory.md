@@ -2,7 +2,7 @@
 
 ## Project Status
 
-**Status:** Phase 14.2 complete; Phase 14 enhancements planned\
+**Status:** Phase 14.3 complete; Phase 14 enhancements planned\
 **Current Phase:** Phase 14 --- Post-MVP Enhancements\
 **Next Phase:** Pick another Phase 14 sub-feature to implement
 
@@ -210,12 +210,12 @@ being worked on changes.
 
 ## Current Work
 
-**Current task:** Phase 14.2 (Scenario Comparison View) complete. Select next Phase 14 enhancement to implement.
+**Current task:** Phase 14.3 (Live / Auto-Play Mode) complete. Select next Phase 14 enhancement to implement.
 
 **Phase 14 planned items:**
 - Export/share reports (PDF/PNG/CSV) [Completed]
 - Scenario comparison view [Completed]
-- Live/auto-play simulation mode
+- Live/auto-play simulation mode [Completed]
 - Authentication + per-user scenarios
 - Alerts & notifications panel
 - Custom graph builder
@@ -319,5 +319,14 @@ being worked on changes.
 - Configured red/green colored delta badges in `MetricCards.tsx` to automatically calculate changes for affected services, cascade depth, recovery time, and system impact.
 - Added "Pin current run as baseline" button and clear callbacks in `SimulationControls.tsx`.
 - Wrote component test suites in `MetricCards.test.tsx` to verify standard rendering and comparison layouts. All 23 unit tests pass.
+
+### 2026-08-25 (Phase 14.3 complete)
+
+- Added `playbackSpeed` state (`0.5x`, `1.0x`, `2.0x`) and frame tracking refs to `useSimulation.ts`.
+- Configured dynamic interval restarts on speed change so animation speed updates immediately mid-simulation.
+- Replaced the static hardcoded PLAYBACK_MS constant with dynamic intervals mapping to the current active speed setting.
+- Integrated a speed button segment selector control panel into the SimulationControls card footer layout.
+- Confirmed compile and test execution validation passes with zero warnings.
+
 
 

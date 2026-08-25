@@ -24,6 +24,8 @@ interface SimulationControlsProps {
   baselineName: string | null
   onPinBaseline: () => void
   onClearBaseline: () => void
+  playbackSpeed: number
+  onChangeSpeed: (speed: number) => void
 }
 
 export function SimulationControls({
@@ -46,6 +48,8 @@ export function SimulationControls({
   baselineName,
   onPinBaseline,
   onClearBaseline,
+  playbackSpeed,
+  onChangeSpeed,
 }: SimulationControlsProps) {
   const isRunning = status === 'RUNNING'
   const canRun = disruptions.length > 0 && !isRunning && phase === 'idle'
@@ -102,9 +106,27 @@ export function SimulationControls({
           </button>
         </div>
 
-        <p className="mt-4 text-xs text-neutral dark:text-slate-300">
-          T+{simulationTime}s · {phase} · {status.toLowerCase()}
-        </p>
+        <div className="mt-4 flex items-center justify-between gap-4">
+          <p className="text-xs text-neutral dark:text-slate-300">
+            T+{simulationTime}s · {phase} · {status.toLowerCase()}
+          </p>
+          <div className="flex items-center gap-1 rounded bg-surface dark:bg-[#0B131C] p-0.5 border border-navy/10 dark:border-white/10 no-print">
+            {([0.5, 1.0, 2.0] as const).map((speed) => (
+              <button
+                key={speed}
+                type="button"
+                onClick={() => onChangeSpeed(speed)}
+                className={`px-1.5 py-0.5 text-[9px] font-bold rounded transition-colors ${
+                  speed === playbackSpeed
+                    ? 'bg-navy dark:bg-white text-white dark:text-navy'
+                    : 'text-neutral hover:bg-neutral-50 dark:hover:bg-[#132230] dark:text-slate-400'
+                }`}
+              >
+                {speed}x
+              </button>
+            ))}
+          </div>
+        </div>
 
         {error && (
           <p className="mt-3 text-sm text-critical" role="alert">

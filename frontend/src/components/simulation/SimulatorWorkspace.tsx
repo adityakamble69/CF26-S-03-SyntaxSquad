@@ -71,6 +71,8 @@ export function SimulatorWorkspace() {
     baselineName,
     pinBaseline,
     clearBaseline,
+    playbackSpeed,
+    changeSpeed,
   } = useSimulation(graphData)
 
   const failedCount = services.filter((service) => service.state === 'FAILED').length
@@ -167,6 +169,8 @@ export function SimulatorWorkspace() {
               baselineName={baselineName}
               onPinBaseline={pinBaseline}
               onClearBaseline={clearBaseline}
+              playbackSpeed={playbackSpeed}
+              onChangeSpeed={changeSpeed}
             />
 
             <ScenarioManager

@@ -35,6 +35,8 @@ describe('SimulationControls Component', () => {
     baselineName: null,
     onPinBaseline: vi.fn(),
     onClearBaseline: vi.fn(),
+    playbackSpeed: 1.0,
+    onChangeSpeed: vi.fn(),
   }
 
   it('renders simulation control buttons', () => {

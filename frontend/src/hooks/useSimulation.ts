@@ -22,8 +22,6 @@ import {
 } from '@/utils/graphHelpers'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-const PLAYBACK_MS = 700
-
 export type SimulationPhase = 'idle' | 'failure' | 'recovery' | 'complete'
 
 function applyStatesToServices(services: Service[], states: Record<string, ServiceState>) {
@@ -55,8 +53,13 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
   const [error, setError] = useState<string | null>(null)
   const [baselineMetrics, setBaselineMetrics] = useState<SimulationMetrics | null>(null)
   const [baselineName, setBaselineName] = useState<string | null>(null)
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0)
 
   const playbackRef = useRef<number | null>(null)
+  const playbackFrameRef = useRef<number>(0)
+  const activeSnapshotsRef = useRef<any[]>([])
+  const activeEventsRef = useRef<SimulationEvent[]>([])
+  const activeOnCompleteRef = useRef<(() => void) | null>(null)
   const runtimeStatesRef = useRef<Record<string, ServiceRuntime> | null>(null)
   const failureCompletedAtRef = useRef(0)
   const firstDisruptionTimeRef = useRef(0)
@@ -202,9 +205,10 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
         .map((dep) => dep.id)
 
       setActiveEdgeIds(related)
-      window.setTimeout(() => setActiveEdgeIds([]), PLAYBACK_MS - 100)
+      const durationMs = Math.round(700 / playbackSpeed)
+      window.setTimeout(() => setActiveEdgeIds([]), Math.max(50, durationMs - 100))
     },
-    [dependencies],
+    [dependencies, playbackSpeed],
   )
 
   const playSnapshots = useCallback(
@@ -212,8 +216,18 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
       snapshots: SimulationSnapshot[],
       resultEvents: SimulationEvent[],
       onComplete: () => void,
+      startFrame = 0,
+      overrideSpeed?: number,
     ) => {
-      let frame = 0
+      activeSnapshotsRef.current = snapshots
+      activeEventsRef.current = resultEvents
+      activeOnCompleteRef.current = onComplete
+
+      let frame = startFrame
+      playbackFrameRef.current = frame
+
+      const currentSpeed = overrideSpeed ?? playbackSpeed
+      const intervalMs = Math.round(700 / currentSpeed)
 
       playbackRef.current = window.setInterval(() => {
         const snapshot = snapshots[frame]
@@ -231,15 +245,16 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
         }
 
         frame += 1
+        playbackFrameRef.current = frame
 
         if (frame >= snapshots.length) {
           stopPlayback()
           onComplete()
           setActiveEdgeIds([])
         }
-      }, PLAYBACK_MS)
+      }, intervalMs)
     },
-    [highlightPropagationEdges, stopPlayback],
+    [highlightPropagationEdges, stopPlayback, playbackSpeed],
   )
 
   const runSimulationPlayback = useCallback(
@@ -415,6 +430,28 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
     setBaselineName(null)
   }, [])
 
+  const changeSpeed = useCallback(
+    (speed: number) => {
+      setPlaybackSpeed(speed)
+      if (status === 'RUNNING' && activeSnapshotsRef.current.length > 0) {
+        if (playbackRef.current !== null) {
+          window.clearInterval(playbackRef.current)
+          playbackRef.current = null
+        }
+        if (activeOnCompleteRef.current) {
+          playSnapshots(
+            activeSnapshotsRef.current,
+            activeEventsRef.current,
+            activeOnCompleteRef.current,
+            playbackFrameRef.current,
+            speed
+          )
+        }
+      }
+    },
+    [status, playSnapshots],
+  )
+
   return {
     services,
     dependencies,
@@ -446,6 +483,8 @@ export function useSimulation(initialData: GraphData = SEED_INFRASTRUCTURE) {
     baselineName,
     pinBaseline,
     clearBaseline,
+    playbackSpeed,
+    changeSpeed,
   }
 }
 
